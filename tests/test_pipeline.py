@@ -50,6 +50,11 @@ def test_split_names_known_suffixes(suffix):
     assert split_names(f"John Smith, {suffix}, Mary Jones") == [f"John Smith, {suffix}", "Mary Jones"]
 
 
+def test_split_names_removes_duplicates_keeping_first_position():
+    # Real case: "Metro" lists Kim Miyori twice among its first five actors.
+    assert split_names("A, B, A, C") == ["A", "B", "C"]
+
+
 @pytest.mark.parametrize("empty", [float("nan"), None, "", "   "])
 def test_split_names_empty_input_gives_empty_list(empty):
     assert split_names(empty) == []
@@ -65,6 +70,18 @@ def test_prepare_keeps_only_first_five_actors():
 def test_prepare_counts_suffixed_name_as_one_of_the_five():
     raw = pd.DataFrame([make_raw(actors="Robert Downey, Jr., B, C, D, E, F")])
     assert prepare(raw).loc[0, "actors"] == ["Robert Downey, Jr.", "B", "C", "D", "E"]
+
+
+def test_prepare_duplicate_actor_counts_once_and_frees_a_slot():
+    # The duplicate is removed before taking the first five, so the 6th distinct name moves up.
+    raw = pd.DataFrame([make_raw(actors="A, B, A, C, D, E, F")])
+    assert prepare(raw).loc[0, "actors"] == ["A", "B", "C", "D", "E"]
+
+
+def test_to_long_has_no_duplicate_film_role_name_rows():
+    raw = pd.DataFrame([make_raw(actors="A, B, A", directors="X, X")])
+    roles = to_long(prepare(raw))
+    assert not roles.duplicated(["film_id", "role", "name"]).any()
 
 
 def test_prepare_parses_release_year():

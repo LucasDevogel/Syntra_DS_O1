@@ -28,7 +28,10 @@ def load_raw(path: Path = RAW_PATH) -> pd.DataFrame:
 
 
 def split_names(text: object) -> list[str]:
-    """Split a comma-separated list of names, re-attaching suffixes such as ', Jr.' to the previous name."""
+    """Split a comma-separated list of names, re-attaching suffixes such as ', Jr.' to the previous name.
+
+    A name listed twice for the same film is kept once, at its first position.
+    """
     if not isinstance(text, str):
         return []
     names: list[str] = []
@@ -39,7 +42,7 @@ def split_names(text: object) -> list[str]:
             names[-1] = f"{names[-1]}, {part}"
         else:
             names.append(part)
-    return names
+    return list(dict.fromkeys(names))  # drop repeated names, keep order
 
 
 def prepare(raw: pd.DataFrame, top_n_actors: int = TOP_N_ACTORS) -> pd.DataFrame:
