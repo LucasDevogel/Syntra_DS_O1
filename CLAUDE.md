@@ -118,6 +118,9 @@ Exploration findings (2026-11-16):
 - `(II)`-style suffixes are RT's way of telling apart different people with the same name, so they are
   not variants. True spelling variants (*Sam Jones III* / *Sam J. Jones*) exist but were not quantified.
 - Genres: 1-7 per film (mostly 1-3). `Documentary`, `Special Interest`, `Television` are also genres.
+- Value check (2026-11-17): both scores are whole numbers within 0-100 in the raw file and after the pipeline;
+  review counts are whole and non-negative. After the pipeline 420 films have a critic score of exactly 100
+  and 107 of exactly 0 (ceiling/floor); audience scores hit 0 or 100 only 6 times.
 - Critic vs. audience correlation 0.65. **Older films score much higher with critics** (pre-1970 mean critic
   80.9 vs. audience 72.2): likely survivorship (mostly classics from that era are on RT). Release year is a
   confounder.
@@ -129,6 +132,10 @@ Agreed filters and definitions (decision log entries 5-9, 2026-11-16):
 3. **Both scores required**: drop films missing `tomatometer_rating` or `audience_rating`.
 4. **Release year required**: drop films without a parseable `original_release_date`.
 5. **Multiple genres / directors**: every genre and every director listed for a film counts for that film.
+6. **Duplicate names count once** (entry 12): repeats are removed from the whole list before the top 5 is
+   taken; same for directors and genres.
+7. **Films without actors or director are kept** (entry 11): they still inform genre/year (and actor or
+   director) effects. No merge with other datasets to fill the gaps.
 
 The pipeline applies these as separate steps and reports rows in/out per step (the row funnel). Counts in
 the log were computed per filter in isolation; the sequential funnel numbers will differ slightly.
