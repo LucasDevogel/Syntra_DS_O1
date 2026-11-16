@@ -1,0 +1,21 @@
+# Unused raw data, too large for GitHub (226 MB > 100 MB limit)
+Data/raw/RT movies and critics/rotten_tomatoes_critic_reviews.csv
+
+# Course material, not ours to publish
+*.pdf
+
+# Secrets
+.env
+.streamlit/secrets.toml
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Editors / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
