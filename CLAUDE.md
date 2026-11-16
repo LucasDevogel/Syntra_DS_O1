@@ -129,6 +129,8 @@ Agreed filters and definitions (decision log entries 5-9, 2026-11-16):
 3. **Both scores required**: drop films missing `tomatometer_rating` or `audience_rating`.
 4. **Release year required**: drop films without a parseable `original_release_date`.
 5. **Multiple genres / directors**: every genre and every director listed for a film counts for that film.
+6. **Films without actors or director are kept** (entry 11): they still inform genre/year (and actor or
+   director) effects. No merge with other datasets to fill the gaps.
 
 The pipeline applies these as separate steps and reports rows in/out per step (the row funnel). Counts in
 the log were computed per filter in isolation; the sequential funnel numbers will differ slightly.
