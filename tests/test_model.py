@@ -210,3 +210,29 @@ def test_save_and_load_roundtrip(tmp_path):
     X2 = p.build_design(new_film, spec2, exclude_self=False)
     assert (X1 != X2).nnz == 0
     assert np.allclose(draws, draws2) and info["lambda"] == 10
+
+
+# --- recurring collaborations ------------------------------------------------------------------------------
+
+def collab_films() -> pd.DataFrame:
+    """Trio X, Y, Z shares 5 films; each also has 3 films alone. 'Self' acts in and directs 5 films."""
+    together = [film(film_id=f"t{i}", actors=["X", "Y", "Z"], directors=["Dir A"]) for i in range(5)]
+    alone = [film(film_id=f"{a}{i}", actors=[a], directors=["Dir B"]) for a in "XYZ" for i in range(3)]
+    self_directed = [film(film_id=f"s{i}", actors=["Self"], directors=["Self"]) for i in range(5)]
+    return frame(*together, *alone, *self_directed)
+
+
+def test_collaborations_merge_groups_and_skip_self_direction():
+    films = collab_films()
+    resid = np.zeros((len(films), 2))
+    resid[:5] = 10.0  # the shared films score 10 points above prediction
+    out = p.collaborations(films, resid, n_resample=50)
+    assert list(out["people"]) == ["X, Y, Z"]  # three pairs with the same films -> one row; no 'Self' pair
+    assert out["shared_films"].iloc[0] == 5 and out["critic_surprise"].iloc[0] == pytest.approx(10.0)
+
+
+def test_collaborations_need_films_apart():
+    films = collab_films()
+    films = films[~films["film_id"].isin(["Z0", "Z1"])]  # Z now has only 1 film without X and Y
+    out = p.collaborations(films, np.zeros((len(films), 2)), n_resample=10)
+    assert list(out["people"]) == ["X, Y"]

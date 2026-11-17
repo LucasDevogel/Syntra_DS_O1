@@ -431,6 +431,82 @@ def load_model(out_dir: Path = CLEAN_DIR):
     return spec, coefficients, draws, info
 
 
+MIN_SHARED_FILMS = 5  # entry 24: pairs need >= 5 shared films ...
+MIN_FILMS_APART = 3  # ... and each partner >= 3 films without the other
+
+
+def out_of_fold_residuals(films: pd.DataFrame, lam: float, folds: int = CV_FOLDS, seed: int = 0) -> np.ndarray:
+    """Actual minus predicted score per film, each film predicted by a model that never saw it."""
+    films = films.reset_index(drop=True)
+    order = np.random.default_rng(seed).permutation(len(films))
+    resid = np.empty((len(films), len(SCORES)))
+    for val_idx in np.array_split(order, folds):
+        train, val = films.drop(index=val_idx), films.loc[val_idx]
+        spec = make_spec(train)
+        coef = fit_ridge(build_design(train, spec, exclude_self=True), train[list(SCORES)].to_numpy(float),
+                         penalties(spec.columns, lam))
+        pred = predict(build_design(val, spec, exclude_self=False), coef)
+        resid[val_idx] = val[list(SCORES)].to_numpy(float) - pred
+    return resid
+
+
+def save_honest_predictions(films: pd.DataFrame, resid: np.ndarray, out_dir: Path = CLEAN_DIR) -> pd.DataFrame:
+    """Per film the prediction of a model that never saw it (actual - out-of-fold residual), for the app."""
+    films = films.reset_index(drop=True)
+    out = pd.DataFrame({"film_id": films["film_id"]})
+    for k, s in enumerate(SCORES):
+        out[s.replace("_score", "_honest")] = films[s].to_numpy(float) - resid[:, k]
+    out.to_csv(out_dir / "film_predictions.csv", index=False)
+    return out
+
+
+def collaborations(films: pd.DataFrame, resid: np.ndarray, n_resample: int = 1000, seed: int = 0) -> pd.DataFrame:
+    """Standout recurring collaborations (entry 24, exploratory): mean out-of-fold residual of shared films.
+
+    Pairs: actor x actor and actor x director, >= MIN_SHARED_FILMS shared films, each partner
+    >= MIN_FILMS_APART films without the other, no self-direction. Pairs with exactly the same shared films
+    (e.g. a trio that always appears together) are merged into one group. The 90% range resamples only the
+    shared films, so it ignores model uncertainty and is too narrow (see the caveats in the app).
+    """
+    films = films.reset_index(drop=True)
+    films_of: dict[tuple[str, str], set[int]] = {}
+    for i, (actors, directors) in enumerate(zip(films["actors"], films["directors"])):
+        for a in actors:
+            films_of.setdefault(("actor", a), set()).add(i)
+        for d in directors:
+            films_of.setdefault(("director", d), set()).add(i)
+    shared: dict[tuple, set[int]] = {}
+    for i, (actors, directors) in enumerate(zip(films["actors"], films["directors"])):
+        for a, b in combinations(sorted(actors), 2):
+            shared.setdefault((("actor", a), ("actor", b)), set()).add(i)
+        for a in actors:
+            for d in directors:
+                if a != d:  # no self-direction
+                    shared.setdefault((("actor", a), ("director", d)), set()).add(i)
+    groups: dict[frozenset, set] = {}
+    for (p1, p2), idx in shared.items():
+        if (len(idx) >= MIN_SHARED_FILMS and len(films_of[p1] - idx) >= MIN_FILMS_APART
+                and len(films_of[p2] - idx) >= MIN_FILMS_APART):
+            groups.setdefault(frozenset(idx), set()).update([p1, p2])
+    rng = np.random.default_rng(seed)
+    lo, hi = RANGE_PERCENTILES
+    rows = []
+    for idx, people in groups.items():
+        idx = sorted(idx)
+        row = {"people": ", ".join(f"{n} (director)" if k == "director" else n for k, n in sorted(people, key=lambda x: (x[0], x[1]))),
+               "shared_films": len(idx),
+               "example_titles": "; ".join(films.loc[idx].sort_values("release_year")["title"].head(4))}
+        for k, s in enumerate(SCORES):
+            label = s.replace("_score", "")
+            r = resid[idx, k]
+            boot = r[rng.integers(0, len(idx), size=(n_resample, len(idx)))].mean(axis=1)
+            row[f"{label}_surprise"] = r.mean()
+            row[f"{label}_low"] = np.percentile(boot, lo)
+            row[f"{label}_high"] = np.percentile(boot, hi)
+        rows.append(row)
+    return pd.DataFrame(rows).sort_values("critic_surprise", ascending=False, ignore_index=True)
+
+
 def run_model(films: pd.DataFrame, out_dir: Path = CLEAN_DIR) -> pd.DataFrame:
     """Cross-validate lambda, fit the final model with bootstrap ranges, save it, and return the CV table."""
     t0 = time.time()
@@ -449,6 +525,11 @@ def run_model(films: pd.DataFrame, out_dir: Path = CLEAN_DIR) -> pd.DataFrame:
     n_people = coefficients["kind"].value_counts().reindex(list(PERSON_KINDS)).to_dict()
     print(f"\nFinal model + {N_BOOTSTRAP} bootstrap refits ({time.time() - t0:.0f} s): {len(spec.columns)} columns, "
           f"people with an own effect: {n_people}")
+    resid = out_of_fold_residuals(films, lam)
+    save_honest_predictions(films, resid, out_dir)
+    collabs = collaborations(films, resid)
+    collabs.to_csv(out_dir / "collaborations.csv", index=False)
+    print(f"Standout recurring collaborations: {len(collabs)} groups/pairs written")
     return cv
 
 

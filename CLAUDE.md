@@ -232,6 +232,14 @@ Bootstrap: 200 refits via film weights (columns and compatibility features fixed
 critics' favourites. `python pipeline.py` writes `model_coefficients.csv`, `model_bootstrap.npz` (9 MB),
 `actor_profiles.csv`, `model_info.json`, `model_cv.csv` to `Data/clean/` (18 MB total).
 
+**App** (branch `feature/app`, 2026-11-17): `app.py` with 8 tabs (Method, Look up a person, Effect matrix, Rankings,
+Genres, Score estimator, Check a film, Recurring collaborations); `requirements.txt` (streamlit, pandas, numpy,
+scipy, altair, pinned). The pipeline also writes `film_predictions.csv` (honest out-of-fold prediction per film) and
+`collaborations.csv`. **`Data/clean/` is committed** (decided 2026-11-17, 19 MB) because Streamlit Cloud reads it;
+rerun `python pipeline.py` (~5 min) and recommit after any change to the pipeline or model.
+Matrix colours: blue = both effects clear, orange = only critic clear, aqua = only audience clear, faded grey =
+neither (validated palette; red/green avoided for colour blindness). Orange = critics and aqua = audience everywhere.
+
 Limitations to state in the app's method section:
 
 - B1: an effect is relative to "a little-known actor/director" (someone below the film threshold).
