@@ -175,6 +175,12 @@ Agreed so far:
   (2010s, R, 95-105 min). Runtime via a slider in minutes that shows which category is used (the model
   works in categories, so the prediction changes in steps).
 
+- **Fan score** (decision 4, log entry 14): every person has a critic effect and an audience effect from two
+  separate models (same films, columns and λ). Fan score = audience effect − 0.72 × critic effect, in audience
+  points (0.72 = sd audience 20.0 / sd critic 27.7). Positive = fan favourite, negative = critics' favourite;
+  label only when the 90% range from the paired bootstrap lies entirely above/below 0, else "no clear
+  difference". Effects are relative to similar films (genre, decade, age rating, runtime corrected).
+
 Still to decide: (4) fan-favourite definition,
 (5) weighting, (6) combining actors, (7) synergy and underminers.
 
