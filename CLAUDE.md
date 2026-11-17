@@ -188,6 +188,30 @@ Agreed so far:
   billing-position or fame weighting (tested: not better, lead-only and fame weights worse). Score estimator:
   max 5 actors, order irrelevant, empty slot = 0; predictions capped at 0-100 (say so in the app).
 
+- **Effect matrix** (decision 7, agreed 2026-11-17): scatter of critic effect (x) vs. audience effect (y) for
+  actors and directors (switchable; default >= 5 films, adjustable). Quadrants by the sign of the estimates,
+  no minimum size: all-round star (+,+), fan favourite (critic −, audience +), critics' darling
+  (critic +, audience −), underperformer (−,−). Solid point = both 90% ranges exclude 0; faded = at least one
+  range crosses 0; hover shows name, films and both ranges. Dashed diagonal audience = 0.72 × critic shows
+  the fan score (above = relatively more liked by audience). Quick bootstrap: only ~29% (critic) and ~26%
+  (audience) of people with >= 5 films have a range excluding 0, so state the share that is "clearly" in
+  its quadrant.
+- **Synergy** (open): pair-specific synergy is only estimable for 80 pairs (>= 5 shared films, >= 3 apart,
+  no self-direction); 23 critic / 22 audience pairs show positive residuals vs. ~8 by chance, but these are
+  mostly franchises (Toy Story, Harry Potter, Godfather), re-teaming after success, and ranges too narrow.
+  Pair-specific list: keep or drop still open.
+- **Cast compatibility** (option A, agreed 2026-11-17): three profile features added as unpenalised columns
+  to both models, computed from each actor's *other* films (leave-one-out for training films; all films for
+  the score estimator): genre fit (cosine between the film's genres and each actor's genre mix, averaged),
+  cast genre similarity (mean pairwise cosine of the actors' genre mixes), cast era gap (mean pairwise
+  difference in the actors' average release year). Only actors with >= 2 other films get a profile; missing
+  features add 0. Experiment (3 splits, held-out MAE gain vs. main model): critic 0.13, audience 0.04.
+  Strongest: cast genre similarity, critic +0.91 points per sd (t = 3.6), audience +0.28 (t = 1.5).
+  Rejected: "genre performance" (actor's residual in the genre; leakage-sensitive, mixed signs).
+  Substitution assumption ("a similar actor gives a similar score") not supported: genre-profile similarity
+  barely relates to similarity of actor effects. Selection (casting puts fitting actors together) is a
+  known limitation. In the app: a separate line "cast compatibility" in the score estimator.
+
 Still to decide: (4) fan-favourite definition,
 (5) weighting, (6) combining actors, (7) synergy and underminers.
 
