@@ -1,0 +1,5 @@
+step,rows_in,rows_out,dropped,reason
+Raw file,17712,17712,0,
+Both scores present,17712,17407,305,Missing critic or audience score (decision 7)
+Release year present,17407,16371,1036,No parseable release date (decision 8)
+Enough reviews,16371,13483,2888,Fewer than 10 critic reviews or 50 audience ratings (decision 6)

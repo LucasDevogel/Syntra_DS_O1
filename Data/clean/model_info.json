@@ -1,0 +1,21 @@
+{
+  "lambda": 10.0,
+  "n_films": 13483,
+  "n_bootstrap": 200,
+  "fan_factor": 0.72,
+  "range_percentiles": [
+    5,
+    95
+  ],
+  "min_films_person": 3,
+  "compat_mean": {
+    "genre_fit": 0.5871131721320116,
+    "cast_genre_similarity": 0.742091981147706,
+    "cast_era_gap": 7.300649552531759
+  },
+  "compat_sd": {
+    "genre_fit": 0.20378551005760237,
+    "cast_genre_similarity": 0.14514960817218217,
+    "cast_era_gap": 5.299914301318484
+  }
+}

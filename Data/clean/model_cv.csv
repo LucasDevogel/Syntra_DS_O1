@@ -1,0 +1,181 @@
+fold,lambda,variant,score,mae
+0,2,controls only,critic_score,19.287775408536138
+0,2,controls only,audience_score,14.127376486508352
+0,2,controls + people,critic_score,19.014663264567215
+0,2,controls + people,audience_score,14.290126793209545
+0,2,full model,critic_score,18.990310575764706
+0,2,full model,audience_score,14.289361873847986
+0,5,controls only,critic_score,19.287775901135802
+0,5,controls only,audience_score,14.127376554682566
+0,5,controls + people,critic_score,18.562509146386365
+0,5,controls + people,audience_score,13.905435043669709
+0,5,full model,critic_score,18.53844712666802
+0,5,full model,audience_score,13.908665275310907
+0,10,controls only,critic_score,19.28777672213794
+0,10,controls only,audience_score,14.127376668311706
+0,10,controls + people,critic_score,18.479198610049846
+0,10,controls + people,audience_score,13.788086119036869
+0,10,full model,critic_score,18.454699321810285
+0,10,full model,audience_score,13.79492094284631
+0,20,controls only,critic_score,19.28777836415246
+0,20,controls only,audience_score,14.127376895591093
+0,20,controls + people,critic_score,18.563925136210454
+0,20,controls + people,audience_score,13.787348303646686
+0,20,full model,critic_score,18.53869586357522
+0,20,full model,audience_score,13.794412552433243
+0,40,controls only,critic_score,19.28778164822176
+0,40,controls only,audience_score,14.127377350233532
+0,40,controls + people,critic_score,18.73673351721944
+0,40,controls + people,audience_score,13.856316038384636
+0,40,full model,critic_score,18.714294379138046
+0,40,full model,audience_score,13.86158138881613
+0,80,controls only,critic_score,19.28778821652165
+0,80,controls only,audience_score,14.127378259853037
+0,80,controls + people,critic_score,18.909165738578082
+0,80,controls + people,audience_score,13.943513913067044
+0,80,full model,critic_score,18.89054098126811
+0,80,full model,audience_score,13.946000482819539
+1,2,controls only,critic_score,19.40182082745479
+1,2,controls only,audience_score,13.97639588439842
+1,2,controls + people,critic_score,18.948778980796234
+1,2,controls + people,audience_score,14.277947029704457
+1,2,full model,critic_score,18.934135436256646
+1,2,full model,audience_score,14.271351942328295
+1,5,controls only,critic_score,19.4018217020433
+1,5,controls only,audience_score,13.97639629395131
+1,5,controls + people,critic_score,18.50549936123447
+1,5,controls + people,audience_score,13.78582923009502
+1,5,full model,critic_score,18.489370480596556
+1,5,full model,audience_score,13.78268839479928
+1,10,controls only,critic_score,19.401823159681776
+1,10,controls only,audience_score,13.976396976538672
+1,10,controls + people,critic_score,18.43969156073379
+1,10,controls + people,audience_score,13.642592318667539
+1,10,full model,critic_score,18.42838199684791
+1,10,full model,audience_score,13.641596658879818
+1,20,controls only,critic_score,19.40182607492421
+1,20,controls only,audience_score,13.976398341710382
+1,20,controls + people,critic_score,18.564089221425416
+1,20,controls + people,audience_score,13.626379631802754
+1,20,full model,critic_score,18.55661053593732
+1,20,full model,audience_score,13.625626191291015
+1,40,controls only,critic_score,19.401831905271546
+1,40,controls only,audience_score,13.976401072042012
+1,40,controls + people,critic_score,18.78170532335259
+1,40,controls + people,audience_score,13.69712368885846
+1,40,full model,critic_score,18.772575120341205
+1,40,full model,audience_score,13.695720671756378
+1,80,controls only,critic_score,19.40184356541603
+1,80,controls only,audience_score,13.976406532657633
+1,80,controls + people,critic_score,19.001937463994032
+1,80,controls + people,audience_score,13.787849115628852
+1,80,full model,critic_score,18.99570308430752
+1,80,full model,audience_score,13.788229728113093
+2,2,controls only,critic_score,19.10548832240425
+2,2,controls only,audience_score,13.846899445367303
+2,2,controls + people,critic_score,18.57404898154852
+2,2,controls + people,audience_score,14.05724432266024
+2,2,full model,critic_score,18.594566010891015
+2,2,full model,audience_score,14.078234795752966
+2,5,controls only,critic_score,19.10548856387931
+2,5,controls only,audience_score,13.846899550375447
+2,5,controls + people,critic_score,18.117009440557858
+2,5,controls + people,audience_score,13.600844277906962
+2,5,full model,critic_score,18.141565223855984
+2,5,full model,audience_score,13.619650556449841
+2,10,controls only,critic_score,19.10548896634062
+2,10,controls only,audience_score,13.84689972539077
+2,10,controls + people,critic_score,18.05140417250724
+2,10,controls + people,audience_score,13.472121158888312
+2,10,full model,critic_score,18.07035163165209
+2,10,full model,audience_score,13.486328927830058
+2,20,controls only,critic_score,19.105489771273916
+2,20,controls only,audience_score,13.846900075427959
+2,20,controls + people,critic_score,18.170992053231732
+2,20,controls + people,audience_score,13.482801053730135
+2,20,full model,critic_score,18.179993304922508
+2,20,full model,audience_score,13.496592547351284
+2,40,controls only,critic_score,19.10549138118339
+2,40,controls only,audience_score,13.846900775528278
+2,40,controls + people,critic_score,18.402743111451276
+2,40,controls + people,audience_score,13.559760445935163
+2,40,full model,critic_score,18.40253054622643
+2,40,full model,audience_score,13.572953255460297
+2,80,controls only,critic_score,19.10549460117397
+2,80,controls only,audience_score,13.846902175833025
+2,80,controls + people,critic_score,18.642461496521726
+2,80,controls + people,audience_score,13.651565710554943
+2,80,full model,critic_score,18.641218441062264
+2,80,full model,audience_score,13.66374603764104
+3,2,controls only,critic_score,19.75362154505409
+3,2,controls only,audience_score,13.871632369946026
+3,2,controls + people,critic_score,19.024474315046003
+3,2,controls + people,audience_score,14.04642253164596
+3,2,full model,critic_score,18.99684573139417
+3,2,full model,audience_score,14.045918955939642
+3,5,controls only,critic_score,19.753621884073844
+3,5,controls only,audience_score,13.871631850438414
+3,5,controls + people,critic_score,18.690498597509656
+3,5,controls + people,audience_score,13.629781299545773
+3,5,full model,critic_score,18.651751107341042
+3,5,full model,audience_score,13.628363794252445
+3,10,controls only,critic_score,19.753622449107436
+3,10,controls only,audience_score,13.871630984663197
+3,10,controls + people,critic_score,18.706843194922037
+3,10,controls + people,audience_score,13.506892641396147
+3,10,full model,critic_score,18.664083444422594
+3,10,full model,audience_score,13.507159545613842
+3,20,controls only,critic_score,19.753623579178292
+3,20,controls only,audience_score,13.871629253378595
+3,20,controls + people,critic_score,18.882612260258316
+3,20,controls + people,audience_score,13.500394080063598
+3,20,full model,critic_score,18.833944232099213
+3,20,full model,audience_score,13.50308099303841
+3,40,controls only,critic_score,19.75362583933355
+3,40,controls only,audience_score,13.871625791872377
+3,40,controls + people,critic_score,19.107650115873003
+3,40,controls + people,audience_score,13.571423325788285
+3,40,full model,critic_score,19.052430591073964
+3,40,full model,audience_score,13.575771204050897
+3,80,controls only,critic_score,19.753630359698985
+3,80,controls only,audience_score,13.871618873108352
+3,80,controls + people,critic_score,19.321085215864635
+3,80,controls + people,audience_score,13.66816388819759
+3,80,full model,critic_score,19.269386087077958
+3,80,full model,audience_score,13.673897612608853
+4,2,controls only,critic_score,19.148005438966546
+4,2,controls only,audience_score,13.763370446451509
+4,2,controls + people,critic_score,18.423902165650837
+4,2,controls + people,audience_score,14.017604268369872
+4,2,full model,critic_score,18.399632141107382
+4,2,full model,audience_score,14.019251273906962
+4,5,controls only,critic_score,19.14800590650317
+4,5,controls only,audience_score,13.763370723706387
+4,5,controls + people,critic_score,18.087431373018067
+4,5,controls + people,audience_score,13.552896384424228
+4,5,full model,critic_score,18.05136785816418
+4,5,full model,audience_score,13.557580794760106
+4,10,controls only,critic_score,19.148006685729648
+4,10,controls only,audience_score,13.763371185791215
+4,10,controls + people,critic_score,18.081578510324608
+4,10,controls + people,audience_score,13.392402402554856
+4,10,full model,critic_score,18.041657681160984
+4,10,full model,audience_score,13.400156415325874
+4,20,controls only,critic_score,19.14800824417741
+4,20,controls only,audience_score,13.763372109935803
+4,20,controls + people,critic_score,18.25276871124094
+4,20,controls + people,audience_score,13.380142381251082
+4,20,full model,critic_score,18.210665162795603
+4,20,full model,audience_score,13.386701390347076
+4,40,controls only,critic_score,19.148011361052458
+4,40,controls only,audience_score,13.763373958125149
+4,40,controls + people,critic_score,18.469854171028107
+4,40,controls + people,audience_score,13.45419466944164
+4,40,full model,critic_score,18.43529892992922
+4,40,full model,audience_score,13.459850556506264
+4,80,controls only,critic_score,19.148017594721114
+4,80,controls only,audience_score,13.763377654104298
+4,80,controls + people,critic_score,18.69711121084502
+4,80,controls + people,audience_score,13.552909670032069
+4,80,full model,critic_score,18.669613977028046
+4,80,full model,audience_score,13.561898245695364
