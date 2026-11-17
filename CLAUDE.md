@@ -226,7 +226,7 @@ controls only 19.34/13.92, + people 18.35/13.56, full model (+ compatibility) 18
 Cast compatibility, estimated jointly, adds only 0.02 (critic) / −0.01 (audience) vs. 0.13/0.04 in the
 second-stage experiment (likely redistribution: actor effects had absorbed part of it). Coefficients stay
 clearly non-zero (cast genre similarity critic +1.01 per sd, range 0.64 to 1.38). Kept by the student
-(2026-11-17); log entry 23 needs a correction of the predictive-gain claim.
+(2026-11-17); log entry 23 updated accordingly.
 Bootstrap: 200 refits via film weights (columns and compatibility features fixed). Among 3,475 people with
 >= 5 films: 26% critic / 23% audience ranges exclude 0, 11% both; 423 clear fan favourites, 427 clear
 critics' favourites. `python pipeline.py` writes `model_coefficients.csv`, `model_bootstrap.npz` (9 MB),
