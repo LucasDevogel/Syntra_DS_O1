@@ -199,7 +199,11 @@ Agreed so far:
 - **Synergy** (open): pair-specific synergy is only estimable for 80 pairs (>= 5 shared films, >= 3 apart,
   no self-direction); 23 critic / 22 audience pairs show positive residuals vs. ~8 by chance, but these are
   mostly franchises (Toy Story, Harry Potter, Godfather), re-teaming after success, and ranges too narrow.
-  Pair-specific list: keep or drop still open.
+  Pair-specific list (agreed 2026-11-17): **keep as a small exploratory section, do not elaborate further**.
+  Title "standout recurring collaborations" (not "synergy"); groups sharing the same films (e.g. the Harry
+  Potter trio) shown as one row; brief caveats: franchise effect, selection (re-teaming after success, almost
+  no negative values), ranges too narrow (model uncertainty missing, series films not independent),
+  overlapping pairs, not usable for new combinations.
 - **Cast compatibility** (option A, agreed 2026-11-17): three profile features added as unpenalised columns
   to both models, computed from each actor's *other* films (leave-one-out for training films; all films for
   the score estimator): genre fit (cosine between the film's genres and each actor's genre mix, averaged),
@@ -212,8 +216,7 @@ Agreed so far:
   barely relates to similarity of actor effects. Selection (casting puts fitting actors together) is a
   known limitation. In the app: a separate line "cast compatibility" in the score estimator.
 
-Still to decide: (4) fan-favourite definition,
-(5) weighting, (6) combining actors, (7) synergy and underminers.
+All modelling decisions are made (2026-11-17). Next: implement the model in `pipeline.py` on a branch.
 
 Limitations to state in the app's method section:
 
