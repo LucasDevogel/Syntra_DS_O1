@@ -181,6 +181,9 @@ Agreed so far:
   label only when the 90% range from the paired bootstrap lies entirely above/below 0, else "no clear
   difference". Effects are relative to similar films (genre, decade, age rating, runtime corrected).
 
+- **No weighting** (decision 5, log entry 15): every film counts equally. Inverse-variance weights give the
+  same result (effects correlation 1.00); count weights let 1% of films carry 71% of the audience weight.
+
 Still to decide: (4) fan-favourite definition,
 (5) weighting, (6) combining actors, (7) synergy and underminers.
 
