@@ -232,6 +232,8 @@ Bootstrap: 200 refits via film weights (columns and compatibility features fixed
 critics' favourites. `python pipeline.py` writes `model_coefficients.csv`, `model_bootstrap.npz` (9 MB),
 `actor_profiles.csv`, `model_info.json`, `model_cv.csv` to `Data/clean/` (18 MB total).
 
+**Live app** (deployed 2026-11-17, Streamlit Community Cloud, branch `main`, Python 3.13): https://syntradso1-6omrf96hgryuewtnmgv9bf.streamlit.app/ (every push to `main` redeploys it).
+
 **App** (branch `feature/app`, 2026-11-17): `app.py` with 8 tabs (Method, Look up a person, Effect matrix, Rankings,
 Genres, Score estimator, Check a film, Recurring collaborations); `requirements.txt` (streamlit, pandas, numpy,
 scipy, altair, pinned). The pipeline also writes `film_predictions.csv` (honest out-of-fold prediction per film) and
