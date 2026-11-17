@@ -216,7 +216,21 @@ Agreed so far:
   barely relates to similarity of actor effects. Selection (casting puts fitting actors together) is a
   known limitation. In the app: a separate line "cast compatibility" in the score estimator.
 
-All modelling decisions are made (2026-11-17). Next: implement the model in `pipeline.py` on a branch.
+All modelling decisions are made (2026-11-17).
+
+**Implemented** (branch `feature/model`, 2026-11-17): model section in `pipeline.py`, tests in
+`tests/test_model.py`. Ridge solved exactly via the normal equations (X'X + P) b = X'y with a dense Cholesky
+solve (~1 s per fit; matches sklearn Ridge to 2e-8). λ chosen by 5-fold CV over {2, 5, 10, 20, 40, 80};
+criterion = mean over both scores of MAE / sd(score). Result: **λ = 10**. Held-out MAE critic/audience:
+controls only 19.34/13.92, + people 18.35/13.56, full model (+ compatibility) 18.33/13.57.
+Cast compatibility, estimated jointly, adds only 0.02 (critic) / −0.01 (audience) vs. 0.13/0.04 in the
+second-stage experiment (likely redistribution: actor effects had absorbed part of it). Coefficients stay
+clearly non-zero (cast genre similarity critic +1.01 per sd, range 0.64 to 1.38). Kept by the student
+(2026-11-17); log entry 23 needs a correction of the predictive-gain claim.
+Bootstrap: 200 refits via film weights (columns and compatibility features fixed). Among 3,475 people with
+>= 5 films: 26% critic / 23% audience ranges exclude 0, 11% both; 423 clear fan favourites, 427 clear
+critics' favourites. `python pipeline.py` writes `model_coefficients.csv`, `model_bootstrap.npz` (9 MB),
+`actor_profiles.csv`, `model_info.json`, `model_cv.csv` to `Data/clean/` (18 MB total).
 
 Limitations to state in the app's method section:
 
