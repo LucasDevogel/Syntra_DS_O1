@@ -158,7 +158,24 @@ Agreed so far:
   (mean residual of the main model for actor-genre combinations with >= 5 films), not as interaction terms
   in the main model. 4,786 actor-genre combinations have >= 5 films; 1,237 actors have >= 5 in 2+ genres.
 
-Still to decide: (2) minimum films per actor/director, (3) confounders, (4) fan-favourite definition,
+- **Minimum films** (decision 2, agreed 2026-11-17): actors and directors with >= 3 films get their own
+  coefficient; everyone below counts as 0 ("little-known"). App: search and score estimator use everyone
+  with >= 3 films (always showing film count and range); rankings (boosters, underminers, fan favourites)
+  only show people with >= 5 films. Evidence (ridge, λ = 10, 5 splits, MAE critic/audience): >= 1: 18.57/13.88,
+  >= 2: 18.53/13.87, >= 3: 18.56/13.92, >= 5: 18.71/13.98, >= 10: 19.00/14.12, no people: 19.76/14.47.
+
+- **Corrections / confounders** (decision 3, agreed 2026-11-17): decade (years before 1940 merged into one
+  group), age rating (`content_rating`), runtime in 6 categories (<= 85, 85-95, 95-105, 105-120, 120-140,
+  > 140 min) plus "unknown" (80 films). Evidence (MAE critic/audience, 5 splits): genre only 19.16/14.25,
+  + decade 18.70/13.92, + age rating 18.57/13.91, + runtime 18.36/13.51. Decade shifts classic people most
+  (Hitchcock critic +7.1 → +1.8, Cary Grant +6.1 → +2.4); age rating and runtime change effects little
+  (median 0.3 points). Age rating adds little on top of decade + genre (NR = 65% of pre-1968 films).
+  Phrase as "improves prediction on unseen films", not "significant" (no significance tests were run).
+- **Score estimator inputs**: decade, age rating and runtime are optional inputs with visible defaults
+  (2010s, R, 95-105 min). Runtime via a slider in minutes that shows which category is used (the model
+  works in categories, so the prediction changes in steps).
+
+Still to decide: (4) fan-favourite definition,
 (5) weighting, (6) combining actors, (7) synergy and underminers.
 
 Limitations to state in the app's method section:
