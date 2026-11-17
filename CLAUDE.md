@@ -46,11 +46,11 @@ What the project must do:
 3. **Briefly explain the path from raw data to result.** Focus on the **non-trivial** decisions (matching,
    thresholds, model choice, confounding), not on routine cleaning.
 
-Deliverables (all still required):
+Deliverables:
 
 - GitHub repo link containing `pipeline.py`, `app.py`, tests, `CLAUDE.md` and `beslissingslogboek.md`
 - A working, public Streamlit URL (not localhost)
-- The original design (photo or digital file; may be lightweight)
+- The original design (photo or digital file): not strictly required (student, 2026-11-17), not added
 
 Keep in mind for the no-AI conversation at delivery: the student must be able to explain every number and
 choice in the app without AI. The decision log is a memory aid.
@@ -140,21 +140,22 @@ Agreed filters and definitions (decision log entries 5-9, 2026-11-16):
 The pipeline applies these as separate steps and reports rows in/out per step (the row funnel). Counts in
 the log were computed per filter in isolation; the sequential funnel numbers will differ slightly.
 
-## Modelling (decisions in progress, 2026-11-17)
+## Modelling (decisions final and implemented, 2026-11-17)
 
-Agreed so far:
+Agreed decisions:
 
 - **Model type** (log entry 13): ridge regression, one model per score (critic, audience), all effects
   estimated together: score = baseline + genres + directors + sum of top-5 actor effects + corrections.
   Demo on critic score (80/20 split): mean abs. error 18.4 vs. 19.4 without people, 24.8 with OLS.
 - **Implementation choices A1-A4** (agreed 2026-11-17):
   - A1: only actor and director coefficients are penalised; corrections (genre, decade, age rating) are
-    effectively unpenalised (scale those columns up).
+    effectively unpenalised (implemented as penalty λ × 1e-4; the baseline gets no penalty).
   - A2: one shared λ for both scores, chosen by cross-validation on both together, so the fan-favourite
     comparison (audience effect − critic effect) is fair.
   - A3: plain 0/1 indicator columns, no standardising (keeps the n/(n+λ) shrinkage intuition).
   - A4: bootstrap with 200 resamples of films, 90% percentile ranges, λ fixed during the bootstrap.
-- **Optional extension** (agreed 2026-11-17): actor strength per genre, done like synergy as a second step
+- **Optional extension, not built** (dropped 2026-11-17; the related "genre performance" feature proved
+  leakage-prone with mixed signs): actor strength per genre, done like synergy as a second step
   (mean residual of the main model for actor-genre combinations with >= 5 films), not as interaction terms
   in the main model. 4,786 actor-genre combinations have >= 5 films; 1,237 actors have >= 5 in 2+ genres.
 
@@ -191,8 +192,8 @@ Agreed so far:
 - **Effect matrix** (decision 7, agreed 2026-11-17): scatter of critic effect (x) vs. audience effect (y) for
   actors and directors (switchable; default >= 5 films, adjustable). Quadrants by the sign of the estimates,
   no minimum size: all-round star (+,+), fan favourite (critic −, audience +), critics' darling
-  (critic +, audience −), underperformer (−,−). Solid point = both 90% ranges exclude 0; faded = at least one
-  range crosses 0; hover shows name, films and both ranges. Dashed diagonal audience = 0.72 × critic shows
+  (critic +, audience −), underperformer (−,−). Colour by which 90% ranges exclude 0 (updated 2026-11-17): blue = both,
+  orange = only critic, aqua = only audience, faded grey = neither; filter per group, multi-highlight; hover shows name, films and both ranges. Dashed diagonal audience = 0.72 × critic shows
   the fan score (above = relatively more liked by audience). Quick bootstrap: only ~29% (critic) and ~26%
   (audience) of people with >= 5 films have a range excluding 0, so state the share that is "clearly" in
   its quadrant.
