@@ -140,6 +140,37 @@ Agreed filters and definitions (decision log entries 5-9, 2026-11-16):
 The pipeline applies these as separate steps and reports rows in/out per step (the row funnel). Counts in
 the log were computed per filter in isolation; the sequential funnel numbers will differ slightly.
 
+## Modelling (decisions in progress, 2026-11-17)
+
+Agreed so far:
+
+- **Model type** (log entry 13): ridge regression, one model per score (critic, audience), all effects
+  estimated together: score = baseline + genres + directors + sum of top-5 actor effects + corrections.
+  Demo on critic score (80/20 split): mean abs. error 18.4 vs. 19.4 without people, 24.8 with OLS.
+- **Implementation choices A1-A4** (agreed 2026-11-17):
+  - A1: only actor and director coefficients are penalised; corrections (genre, decade, age rating) are
+    effectively unpenalised (scale those columns up).
+  - A2: one shared λ for both scores, chosen by cross-validation on both together, so the fan-favourite
+    comparison (audience effect − critic effect) is fair.
+  - A3: plain 0/1 indicator columns, no standardising (keeps the n/(n+λ) shrinkage intuition).
+  - A4: bootstrap with 200 resamples of films, 90% percentile ranges, λ fixed during the bootstrap.
+- **Optional extension** (agreed 2026-11-17): actor strength per genre, done like synergy as a second step
+  (mean residual of the main model for actor-genre combinations with >= 5 films), not as interaction terms
+  in the main model. 4,786 actor-genre combinations have >= 5 films; 1,237 actors have >= 5 in 2+ genres.
+
+Still to decide: (2) minimum films per actor/director, (3) confounders, (4) fan-favourite definition,
+(5) weighting, (6) combining actors, (7) synergy and underminers.
+
+Limitations to state in the app's method section:
+
+- B1: an effect is relative to "a little-known actor/director" (someone below the film threshold).
+- B2: effects are additive and constant: the same actor effect in every genre, era and cast; a genre effect
+  is how liked that genre is given its cast/crew and era, not an actor's strength in that genre.
+- B3: the 0-100 bounds are ignored by the linear model (ceiling: 420 films at critic score 100);
+  predictions are clipped to 0-100.
+- B4: the bootstrap treats films as independent; franchises/sequels are not, so ranges are slightly too narrow.
+- B5: association, not causation (selection of actors into better projects).
+
 ## Data rules (strict)
 
 - `Data/raw/`: original downloads, exactly as received. **Never edit, overwrite, rename or delete
