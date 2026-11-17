@@ -184,6 +184,10 @@ Agreed so far:
 - **No weighting** (decision 5, log entry 15): every film counts equally. Inverse-variance weights give the
   same result (effects correlation 1.00); count weights let 1% of films carry 71% of the audience weight.
 
+- **Combining actors** (decision 6, log entries 16-17): sum of top-5 actor effects, equal weights; no
+  billing-position or fame weighting (tested: not better, lead-only and fame weights worse). Score estimator:
+  max 5 actors, order irrelevant, empty slot = 0; predictions capped at 0-100 (say so in the app).
+
 Still to decide: (4) fan-favourite definition,
 (5) weighting, (6) combining actors, (7) synergy and underminers.
 
